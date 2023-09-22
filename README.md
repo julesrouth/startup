@@ -9,7 +9,7 @@ Have you ever tried to start a habit and used a habit tracking app, but then for
 
 ### Design Images
 
-![habit sticker chart website layout](https://github.com/julesrouth/startup/assets/99697554/9c99fa12-d38d-478c-b5b9-5602e11d1c8a)
+![habit sticker chart website layout (1)](https://github.com/julesrouth/startup/assets/99697554/c7d52a2e-0e38-44bc-9d96-6dd364d73523)
 
 ### Key features
 
@@ -32,6 +32,7 @@ I am going to use the required technologies in the following ways.
 -   **JavaScript**  - Provides login, sticker choice display, applying backend endpoint calls.
 -   **Service**  - Backend service with endpoints for:
     -   login
+    -   retrieving habits and sticker choice
 -   **DB**  - Store users, habits, and stickers in the database
 -   **Login**  - Register and login users. Credentials securely stored in database. Can't vote unless authenticated.
 -   **WebSocket**  - 
