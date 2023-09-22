@@ -9,7 +9,8 @@ Have you ever tried to start a habit and used a habit tracking app, but then for
 
 ### Design Images
 
-![habit sticker chart website layout (1)](https://github.com/julesrouth/startup/assets/99697554/c7d52a2e-0e38-44bc-9d96-6dd364d73523)
+![habit sticker chart website layout (1)](https://github.com/julesrouth/startup/assets/99697554/5eadfaa6-3f57-4121-8689-745829fe351b)
+
 
 ### Key features
 
