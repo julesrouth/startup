@@ -7,6 +7,10 @@
 
 Have you ever tried to start a habit and used a habit tracking app, but then forgot you set it up the next day because if looked so boring? Introducing Habit Sticker Tracker, that allows you to pick a sticker to get each day for completing your habit goal! No more boring check boxes, but feel like a kid again with many different colorful and fun options to choose from. This application allows you to create habit goals to accomplish weekly and will track your progress over time. It will save each successful week as a sticker chart in a gallery that you can look back on and admire.
 
+### Design Images
+
+![habit sticker chart website layout](https://github.com/julesrouth/startup/assets/99697554/9c99fa12-d38d-478c-b5b9-5602e11d1c8a)
+
 ### Key features
 
 -   Secure login over HTTPS
