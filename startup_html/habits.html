@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <!-- Tell browsers not to scale the viewport automatically -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Habits</title>
+    <link rel="icon" href="favicon.ico" />
+  </head>
+  <body>
+    <!-- Use header, main, and footer elements to give semantic structure -->
+    <header>
+      <h1>Habit Chart</h1>
+
+      <!-- Navigation elements -->
+      <nav>
+        <!-- Menu is a semantic alternative to <ul> that represents an interaction -->
+        <menu>
+          <li><a href="index.html">Login</a></li>
+          <li><a href="habits.html">Habits</a></li>
+          <li><a href="newHabit.html">New Habit</a></li>
+          <li><a href="gallery.html">Gallery</a></li>
+          <li><a href="about.html">About</a></li>
+        </menu>
+      </nav>
+
+      <!-- Since we don't have the ability to style we use old style HTML to give some visual formatting -->
+      <hr />
+    </header>
+
+    <main>
+      <table>
+        <thead>
+          <tr>
+            <th>Habit</th>
+            <th>Sunday</th>
+            <th>Monday</th>
+            <th>Tuesday</th>
+            <th>Wednesday</th>
+            <th>Thursday</th>
+            <th>Friday</th>
+            <th>Saturday</th>
+            <th>Goal</th>
+            <th>Meter</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Exercise 30 min</td>
+            <td></td>
+            <td><img width="50" src="star_sticker.png" alt="random"></td>
+            <td><img width="50" src="star_sticker.png" alt="random"></td>
+            <td><img width="50" src="star_sticker.png" alt="random"></td>
+            <td><img width="50" src="star_sticker.png" alt="random"></td>
+            <td><img width="50" src="star_sticker.png" alt="random"></td>
+            <td><img width="50" src="star_sticker.png" alt="random"></td>
+            <td>6/6</td>
+            <td><meter></meter></td>
+          </tr>
+          <tr>
+            <td>Read</td>
+            <td></td>
+            <td><img width="40" src="heart_sticker.png" alt="random"></td>
+            <td></td>
+            <td><img width="40" src="heart_sticker.png" alt="random"></td>
+            <td></td>
+            <td><img width="40" src="heart_sticker.png" alt="random"></td>
+            <td></td>
+            <td>3/3</td>
+            <td><meter></meter></td>
+
+          </tr>
+          <tr>
+            <td>Clean 15 min</td>
+            <td><img width="40" src="sun_sticker.png" alt="random"></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td><img width="40" src="sun_sticker.png" alt="random"></td>
+            <td>2/7</td>
+            <td><meter></meter></td>
+          </tr>
+        </tbody>
+      </table>
+    </main>
+
+    <footer>
+      <hr />
+      <span class="text-reset">Author Name(s)</span>
+      <br />
+      <a href="https://github.com/julesrouth/startup">GitHub</a>
+    </footer>
+  </body>
+</html>
