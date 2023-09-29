@@ -36,5 +36,16 @@ I am going to use the required technologies in the following ways.
     -   retrieving habits and sticker choice
 -   **DB**  - Store users, habits, and stickers in the database
 -   **Login**  - Register and login users. Credentials securely stored in database. Can't vote unless authenticated.
--   **WebSocket**  - 
+-   **WebSocket**  - Realtime data from new habits that will be stored in the gallery
 -   **React**  - Application ported to use the React web framework.
+
+### HTML deliverable
+For this deliverable I built out the structure of my application using HTML.
+
+-    **HTML pages*** - 4 HTML page that represent the ability to login, track your habits with stickers, add new habits, and see a gallery of accomplishments.
+-    **Links** - Each page has a menu that links to each other page
+-    **Text** - The habit table is visually written with text, as well as the gallery table, log in box and new habit box
+-    **Images** - Images are taking the place of stickers in the habit chart right now.
+-    **Login** - Input box and submit button for login.
+-    **Database** - The habit data and stickers will be pulled from the database on each page
+-    **WebSocket** - The meter on the habit chart will show realtime habit tracking
