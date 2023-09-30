@@ -43,7 +43,7 @@ I am going to use the required technologies in the following ways.
 For this deliverable I built out the structure of my application using HTML.
 
 -    **HTML pages*** - 4 HTML page that represent the ability to login, track your habits with stickers, add new habits, and see a gallery of accomplishments.
--    **Links** - Each page has a menu that links to each other page
+-    **Links** - Each page has a menu that links to each other page. The login page links to the main habit page once you submit.
 -    **Text** - The habit table is visually written with text, as well as the gallery table, log in box and new habit box
 -    **Images** - Images are taking the place of stickers in the habit chart right now.
 -    **Login** - Input box and submit button for login.
