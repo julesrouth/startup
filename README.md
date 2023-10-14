@@ -49,3 +49,13 @@ For this deliverable I built out the structure of my application using HTML.
 -    **Login** - Input box and submit button for login.
 -    **Database** - The habit data and stickers will be pulled from the database on each page
 -    **WebSocket** - The meter on the habit chart will show realtime habit tracking
+
+### CSS deliverable
+For this deliverable I properly styled the application into its final appearance.
+
+-    **Header, footer, and main content body**
+-    **Navigation elements** - Navigation is in the top left corner
+-    **Reponsive to window resizing** - Everything is how I want it for the tables, they stay centered. Still need to work on new habit form.
+-    **Application elements** - Used good contrast and whitespace
+-    **Application text content** - Consistent fonts
+-    **Application images** - Still just png that are in table. Those will be replaced with something from a database
