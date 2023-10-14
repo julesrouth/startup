@@ -1,0 +1,79 @@
+body {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  min-width: 375px;
+  background-color: rgba(254, 251, 234, 0.986);
+}
+
+.content{
+  display: flex;
+  height: 100%;
+  flex-flow: column;
+}
+
+header {
+  flex: 0 80px;
+  background-color: rgb(123, 150, 123);
+  color: rgb(236, 248, 236);
+}
+
+main {
+  flex: 1 calc(100vh - 110px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color:  rgba(254, 251, 234, 0.986);
+}
+
+.box-content{
+  display: flex;
+  /* flex: 1 1 auto; */
+  height: 100%;
+  justify-content: center;
+
+}
+
+tbody, td, tfoot, th, thead, tr{
+  border-spacing: 10px;
+  padding: 10px;
+}
+
+footer {
+  flex: 0 30px;
+}
+
+menu {
+  flex: 1;
+  display: flex;
+  /*  overwrite Bootstrap so the menu does not wrap */
+  flex-direction: row !important;
+  list-style: none;
+}
+
+.navbar-brand {
+  padding-left: 0.3em;
+  border-bottom: solid rgb(123, 150, 123) thin;
+}
+
+menu .nav-item {
+  padding: 0 0.3em;
+}
+
+footer a {
+  float: right;
+  background-color: rgba(254, 251, 234, 0.986);
+}
+
+@media (max-height: 600px) {
+  header {
+    display: none;
+  }
+  footer {
+    display: none;
+  }
+  main {
+    flex: 1 100vh;
+  }
+}
