@@ -59,3 +59,11 @@ For this deliverable I properly styled the application into its final appearance
 -    **Application elements** - Used good contrast and whitespace
 -    **Application text content** - Consistent fonts
 -    **Application images** - Still just png that are in table. Those will be replaced with something from a database
+## JavaScript deliverable
+
+For this deliverable I implemented by JavaScript so that the application works for a single user. I also added placeholders for future technology.
+
+- **login** - When you press enter or the login button it takes you to the habits page
+- **database** -Displayed current habits for the week. Held in local storage which will be replaced by the database
+- **WebSocket** - Gallery display finished habits from all users in the database
+- **application logic** - Adds a new habit and takes you to the habits page where it shows the habits for the week. Can increase the accomplished habit count by pressing a button. Still need to implent the sticker option, but this function will suffice for now
