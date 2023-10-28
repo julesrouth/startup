@@ -42,7 +42,7 @@ I am going to use the required technologies in the following ways.
 ### HTML deliverable
 For this deliverable I built out the structure of my application using HTML.
 
--    **HTML pages*** - 4 HTML page that represent the ability to login, track your habits with stickers, add new habits, and see a gallery of accomplishments.
+-    **HTML pages** - 4 HTML page that represent the ability to login, track your habits with stickers, add new habits, and see a gallery of accomplishments.
 -    **Links** - Each page has a menu that links to each other page. The login page links to the main habit page once you submit.
 -    **Text** - The habit table is visually written with text, as well as the gallery table, log in box and new habit box
 -    **Images** - Images are taking the place of stickers in the habit chart right now.
@@ -65,5 +65,5 @@ For this deliverable I implemented by JavaScript so that the application works f
 
 - **login** - When you press enter or the login button it takes you to the habits page
 - **database** -Displayed current habits for the week. Held in local storage which will be replaced by the database
-- **WebSocket** - Gallery display finished habits from all users in the database
+- **WebSocket** - Gallery displays finished habits from all users in the database
 - **application logic** - Adds a new habit and takes you to the habits page where it shows the habits for the week. Can increase the accomplished habit count by pressing a button. Still need to implent the sticker option, but this function will suffice for now
