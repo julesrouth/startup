@@ -4157,3 +4157,303 @@ We can rework our coinToss example and make it so 10 percent of the time the coi
 ```js
 const coinToss = new Promise((resolve, reject) => {
   setTimeout(() => {
+    if (Math.random() > 0.1) {
+      resolve(Math.random() > 0.5 ? 'heads' : 'tails');
+    } else {
+      reject('fell off table');
+    }
+  }, 10000);
+});
+```
+
+We then chain the `then`, `catch` and `finally` functions to the coinToss object in order to handle each of the possible results.
+
+```js
+coinToss
+  .then((result) => console.log(`Coin toss result: ${result}`))
+  .catch((err) => console.log(`Error: ${err}`))
+  .finally(() => console.log('Toss completed'));
+
+// OUTPUT:
+//    Coin toss result: tails
+//    Toss completed
+```
+
+## The observer pattern
+
+Promises are the standard way to do asynchronous processing in JavaScript, but they are not the only way. The `Observer` pattern, popularized by web programming frameworks such as `Angular`, use a model called `Observer`. The major difference between Observers and Promises is that Promises immediately begin to execute when the Promise is created, but Observers form a pipeline that you then pass an execution object into. This allows Observers to be reused, and the result of executing an Observable to be saved as a history of a particular execution.
+
+## ☑ Assignment
+
+This [CodePen](https://codepen.io/leesjensen/pen/RwJJKwj) uses promises to order pizzas. Create a fork of the pen and take some time to experiment with it. Modify the CodePen to include a new function that makes the pizza and include it in the promise chain.
+
+When you are done submit your CodePen URL to the Canvas assignment.
+
+### 🧧 Possible solution
+
+If you get stuck here is a [possible solution](https://codepen.io/leesjensen/pen/vYVgpyL).
+</details>
+
+<details close>
+<summary>Async/Await</summary>
+
+# JavaScript Async/await
+
+📖 **Deeper dive reading**: [MDN async function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function)
+
+JavaScript Promise objects are great for asynchronous execution, but as developers began to build large systems with promises they started wanting a more concise representation. This was provided with the introduction of the `async/await` syntax. The `await` keyword wraps the execution of a promise and removed the need to chain functions. The `await` expression will block until the promise state moves to `fulfilled`, or throws an exception if the state moves to `rejected`. For example, if we have a function that returns a coin toss promise.
+
+```js
+const coinToss = () => {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      if (Math.random() > 0.1) {
+        resolve(Math.random() > 0.5 ? 'heads' : 'tails');
+      } else {
+        reject('fell off table');
+      }
+    }, 1000);
+  });
+};
+```
+
+We can create equivalent executions with either a promise `then/catch` chain, or an `await` with a `try/catch` block.
+
+**then/catch chain version**
+
+```js
+coinToss()
+  .then((result) => console.log(`Toss result ${result}`))
+  .catch((err) => console.error(`Error: ${err}`))
+  .finally(() => console.log(`Toss completed`));
+```
+
+**async, try/catch version**
+
+```js
+try {
+  const result = await coinToss();
+  console.log(`Toss result ${result}`);
+} catch (err) {
+  console.error(`Error: ${err}`);
+} finally {
+  console.log(`Toss completed`);
+}
+```
+
+## async
+
+One important restriction for working with `await` is that you cannot call await unless it is called at the top level of the JavaScript, or is in a function that is defined with the `async` keyword. Applying the `async` keyword transforms the function so that it returns a promise that will resolve to the value that was previously returned by the function. Basically this turns any function into an asynchronous function, so that it can in turn make asynchronous requests.
+
+This can be demonstrated with a function that makes animal noises. Notice that the return value is a simple string.
+
+```js
+function cow() {
+  return 'moo';
+}
+console.log(cow());
+// OUTPUT: moo
+```
+
+If we designate the function to be asynchronous then the return value becomes a promise that is immediately resolved and has a value that is the return value of the function.
+
+```js
+async function cow() {
+  return 'moo';
+}
+console.log(cow());
+// OUTPUT: Promise {<fulfilled>: 'moo'}
+```
+
+We then change the cow function to explicitly create a promise instead of the automatically generated promise that the await keyword generates.
+
+```js
+async function cow() {
+  return new Promise((resolve) => {
+    resolve('moo');
+  });
+}
+console.log(cow());
+// OUTPUT: Promise {<pending>}
+```
+
+You can see that the promise is in the pending state because the promise's execution function has not yet resolved.
+
+## await
+
+The `async` keyword declares that a function returns a promise. The `await` keyword wraps a call to the `async` function, blocks execution until the promise has resolved, and then returns the result of the promise.
+
+We can demonstrate `await` in action with the cow promise from above. If we log the output from invoking `cow` then we see that the return value is a promise. However, if we prefix the call to the function with the await keyword, execution will stop until the promise has resolved, at which point the result of the promise is returned instead of the actual promise object.
+
+```js
+console.log(cow());
+// OUTPUT: Promise {<pending>}
+
+console.log(await cow());
+// OUTPUT: moo
+```
+
+By combining `async`, to define functions that return promises, with `await`, to wait on the promise, you can create code that is asynchronous, but still maintains the flow of the code without explicitly using callbacks.
+
+## Putting it all together
+
+You can see the benefit for `async`/`await` clearly by considering a case where multiple promises are required. For example, when calling the `fetch` web API on an endpoint that returns JSON, you would need to resolve two promises. One for the network call, and one for converting the result to JSON. A promise implementation would look like the following.
+
+```js
+const httpPromise = fetch('https://simon.cs260.click/api/user/me');
+const jsonPromise = httpPromise.then((r) => r.json());
+jsonPromise.then((j) => console.log(j));
+console.log('done');
+
+// OUTPUT: done
+// OUTPUT: {email: 'bud@mail.com', authenticated: true}
+```
+
+With async/await, you can clarify the code intent by hiding the promise syntax, and also make the execution block until the promise is resolved.
+
+```js
+const httpResponse = await fetch('https://simon.cs260.click/api/user/me');
+const jsonResponse = await httpResponse.json();
+console.log(jsonResponse));
+console.log('done');
+
+// OUTPUT: {email: 'bud@mail.com', authenticated: true}
+// OUTPUT: done
+```
+
+## ☑ Assignment
+
+Fork this [CodePen](https://codepen.io/leesjensen/pen/RwJJKwj) that uses promises and convert it to use `async`/`await`.
+
+When you are done submit your CodePen URL to the Canvas assignment.
+
+### 🧧 Possible solution
+
+If you get stuck here is a [possible solution](https://codepen.io/leesjensen/pen/KKeevVg)
+</details>
+
+<details close>
+<summary>Debugging JavaScript</summary>
+
+# Debugging JavaScript
+
+📖 **Deeper dive reading**: [MDN Console](https://developer.mozilla.org/en-US/docs/Learn/Common_questions/What_are_browser_developer_tools)
+
+It is inevitable that your code is going to have problems, or bugs, at some point. That may be while you are originally authoring it, working on other code that changes assumed dependencies, or while enhancing the code with new functionality.
+
+Learning how to quickly discover, and resolve, bugs will greatly increase your value as a web developer. Additionally, debugging skills can also be used during the development process. By following a pattern of writing a block of code and then stepping through, or debugging, the block, you gain confidence that the block is working as desired before moving on to the next block.
+
+## Console debugging
+
+📖 **Deeper dive reading**: [MDN Console](https://developer.mozilla.org/en-US/docs/Web/API/console)
+
+One of the simplest ways to debug your JavaScript code is to insert `console.log` functions that output the state of the code as it executes. For example, we can create a simple web application that has an HTML and JavaScript file that demonstrates the difference between `let` and `var`. By inserting `console.log` statements into the code, we can see what the value of each variable is as the code executes.
+
+**index.html**
+
+```html
+<body>
+  <h1>Debugging</h1>
+  <script src="index.js"></script>
+</body>
+```
+
+**index.js**
+
+```js
+var varCount = 20;
+let letCount = 20;
+
+console.log('Initial - var: %d, let: %d', varCount, letCount);
+
+for (var varCount = 1; varCount < 2; varCount++) {
+  for (let letCount = 1; letCount < 2; letCount++) {
+    console.log('Loop - var: %d, let: %d', varCount, letCount);
+  }
+}
+
+const h1El = document.querySelector('h1');
+h1El.textContent = `Result - var:${varCount}, let:${letCount}`;
+console.log('Final - var: %d, let: %d', varCount, letCount);
+```
+
+Take the following steps to see the result of console debugging.
+
+1. Create the above files in a test directory named testConsole
+1. Open the testConsole directory in VS Code
+1. Run index.html using the VS Code Live Server extension
+1. Open the Chrome browser debugger (press `F12`)
+1. Select the `Console` tab
+1. Refresh the browser
+
+You should see the following result.
+
+![JavaScript console debugging](javascriptDebugConsole.jpg)
+
+You can use the debugger console window to inspect variables without using the `console.log` function from your code. For example, if you type varCount in the console window it will print out the current value of varCount. You can also execute JavaScript directly in the console window. For example, if you type `varCount = 50` and press `Enter` it will change the current value of varCount.
+
+![JavaScript console debugging variables](javascriptDebugConsoleVars.jpg)
+
+## Browser debugging
+
+`console.log` debugging is great for times when you just need to quickly see what is going on in your code, but to really understand the code as it executes you want to use the full capabilities of the browser's debugger.
+
+Using the same setup we used for `console.log` debugging, open up Chrome's browser debugger, but this time select the source tab. This will display the source files that comprise the currently rendered content.
+
+![JavaScript source debugging](javascriptDebugSource.jpg)
+
+You can either select `index.js` from the source view on the left, or press `CTRL-P` (on Windows) or `⌘-P` (on Mac) and then select `index.js` from the list that pops up. Then set a breakpoint on line 4 by clicking on the line number on the left of the displayed source code. This makes it so that the execution of code will pause whenever that line is executed. Refreshing the browser window will cause `index.js` to reload and pause on the breakpoint.
+
+![JavaScript breakpoint](javascriptDebugBreakpoint.jpg)
+
+With the browser paused in the debugger you can move your mouse cursor over a variable to see its value, see what variables are in scope, set watches on variables, or use the console to interact with the code.
+
+This gives you complete control to inspect what the JavaScript code is doing and experiment with possible alternative directions for the code. Take some time to poke around in the debugger. Learning how to exploit its functionality will make you a much better web developer.
+</details>
+
+# Midterm
+In the following code, what does the link element do?
+- a link element defines the relationship between the current document and an external resource
+
+In the following code,  what does a div tag do?
+- a div tag defines a division or section in an HTML document. Contains specific HTML elements, which is then styled with CSS or manipulated with JavaScript. Styled by using the class or id attribute.
+
+In the following code, what is the difference between the #title and .grid selector?
+- #title would be referencing all titles in the HTML document.
+- .grid reference the div element with class "grid" in html
+
+In the following code, what is the difference between padding and margin?
+- Content is the core of the box. It’s around the content the other layers are built. Content can have different visualizations: it can be text, image, icon or something else.
+- Padding is the space between content and border, which is the next component of the box.
+- Border is a visible or invisible line around the edge of the box.
+- Margin is the outer space around the box.
+Given this HTML and this CSS how will the images be displayed using flex?
+What does the following padding CSS do?
+What does the following code using arrow syntax function declaration do?
+What does the following code using map with an array output?
+What does the following code output using getElementByID and addEventListener?
+What does the following line of Javascript do using a # selector?
+Which of the following are true? (mark all that are true about the DOM)
+By default, the HTML span element has a default CSS display property value of: 
+How would you use CSS to change all the div elements to have a background color of red?
+How would you display an image with a hyperlink in HTML?
+In the CSS box model, what is the ordering of the box layers starting at the inside and working out?
+Given the following HTML, what CSS would you use to set the text "troubl" to green and leave the "double" text unaffected?
+What will the following code output when executed using a for loop and console.log?
+How would you use JavaScript to select an element with the id of “byu” and change the text color of that element to green?
+What is the opening HTML tag for a paragraph, ordered list, unordered list, second level heading, first level heading, third level heading?
+How do you declare the document type to be html?
+What is valid javascript syntax for if, else, for, while, switch statements?
+What is the correct syntax for creating a javascript object?
+Is is possible to add new properties to javascript objects?
+If you want to include JavaScript on an HTML page, which tag do you use?
+Given the following HTML, what JavaScript could you use to set the text "animal" to "crow" and leave the "fish" text unaffected?
+Which of the following correctly describes JSON?
+What does the console command chmod, pwd, cd, ls, vim, nano, mkdir, mv, rm, man, ssh, ps, wget, sudo  do?
+Which of the following console command creates a remote shell session?
+Which of the following is true when the -la parameter is specified for the ls console command?
+Which of the following is true for the domain name banana.fruit.bozo.click, which is the top level domain, which is a subdomain, which is a root domain?
+Is a web certificate is necessary to use HTTPS.
+Can a DNS A record can point to an IP address or another A record.
+Port 443, 80, 22 is reserved for which protocol?
+What will the following code using Promises output when executed?
