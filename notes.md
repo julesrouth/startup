@@ -4468,7 +4468,9 @@ background-color: #ff0000;
 }
 
 How would you display an image with a hyperlink in HTML?
-- <img alt="mountain landscape" src="https://im..." />
+```ruby
+<img alt="mountain landscape" src="https://im..." />
+```
 
 
 In the CSS box model, what is the ordering of the box layers starting at the inside and working out?
@@ -4490,12 +4492,14 @@ element.style.color = "green";
 
 
 What is the opening HTML tag for a paragraph, ordered list, unordered list, second level heading, first level heading, third level heading?
-- Paragraph: <p>
-- Ordered List: <ol>
-- Unordered List: <ul>
-- Second Level Heading (Heading 2): <h2>
-- First Level Heading (Heading 1): <h1>
-- Third Level Heading (Heading 3): <h3>
+```ruby
+//Paragraph: <p>
+//Ordered List: <ol>
+//Unordered List: <ul>
+//Second Level Heading (Heading 2): <h2>
+//First Level Heading (Heading 1): <h1>
+//Third Level Heading (Heading 3): <h3>
+```
 
 How do you declare the document type to be html?
 ```ruby
@@ -4511,13 +4515,13 @@ How do you declare the document type to be html?
 ```
 
 What is valid javascript syntax for if, else, for, while, switch statements?
-if
+- if
 ```ruby
 if (condition) {
     // code to be executed if the condition is true
 }
 ```
-else if
+- else if
 ```ruby
 if (condition) {
     // code to be executed if the condition is true
@@ -4525,13 +4529,13 @@ if (condition) {
     // code to be executed if the condition is false
 }
 ```
-for loop
+- for loop
 ```ruby
 for (var i = 0; i < 5; i++) {
     // code to be executed in each iteration
 }
 ```
-while loop
+- while loop
 ```ruby
 var i = 0;
 while (i < 5) {
@@ -4539,7 +4543,7 @@ while (i < 5) {
     i++;
 }
 ```
-switch statement
+- switch statement
 ```ruby
 var fruit = "apple";
 switch(fruit) {
@@ -4553,6 +4557,7 @@ switch(fruit) {
         // code to be executed if fruit doesn't match any case
 }
 ```
+
 
 What is the correct syntax for creating a javascript object?
 object literal:
