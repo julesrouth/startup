@@ -4427,33 +4427,260 @@ In the following code, what is the difference between padding and margin?
 - Padding is the space between content and border, which is the next component of the box.
 - Border is a visible or invisible line around the edge of the box.
 - Margin is the outer space around the box.
+
 Given this HTML and this CSS how will the images be displayed using flex?
+- Four layout modes
+ - Block, for sections in a webpage
+ - Inline, for text
+ - Table, for two-dimensional table data
+ - Positioned, for explicit position of an element
+- Flex container properties
+ - flex-direction: which direction to stack elements (column, column-reverse, row, row-reverse)
+ - flex-wrap: specifies whether the flex should wrap or not (wrap, nowrap, wrap-reverse)
+ - flex-flow: shorthand for setting both direction and wrap (ex: row wrap)
+ - justify-content: properly align flex items (center, flex-start, flex-end, space-around, space_between)
+ - align-items: align flex items (everything in justify, plus stretch, baseline)
+ - align-content: use to align flex lines
+
 What does the following padding CSS do?
+- Padding is used to create space around an element's content, inside of any defined borders
+- Can be padding-top, right, bottom, left
+- values can be in px or in % of the width of the containing element
+
 What does the following code using arrow syntax function declaration do?
+- Arrow functions: short function syntax
+- variable = (parameters if needed) => operation;
+
 What does the following code using map with an array output?
+
 What does the following code output using getElementByID and addEventListener?
+
 What does the following line of Javascript do using a # selector?
+- selector references an id of an element in the html document
 Which of the following are true? (mark all that are true about the DOM)
+
 By default, the HTML span element has a default CSS display property value of: 
+
 How would you use CSS to change all the div elements to have a background color of red?
+
+body {
+background-color: #ff0000;
+}
+
 How would you display an image with a hyperlink in HTML?
+- <img alt="mountain landscape" src="https://im..." />
+
+
 In the CSS box model, what is the ordering of the box layers starting at the inside and working out?
+
+content, padding, border, margin
+
 Given the following HTML, what CSS would you use to set the text "troubl" to green and leave the "double" text unaffected?
+
 What will the following code output when executed using a for loop and console.log?
+
 How would you use JavaScript to select an element with the id of “byu” and change the text color of that element to green?
+```ruby
+// Select the element with the id "byu"
+var element = document.getElementById("byu");
+
+// Change the text color of the selected element to green
+element.style.color = "green";
+```
+
+
 What is the opening HTML tag for a paragraph, ordered list, unordered list, second level heading, first level heading, third level heading?
+- Paragraph: <p>
+- Ordered List: <ol>
+- Unordered List: <ul>
+- Second Level Heading (Heading 2): <h2>
+- First Level Heading (Heading 1): <h1>
+- Third Level Heading (Heading 3): <h3>
+
 How do you declare the document type to be html?
+```ruby
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Your head content goes here -->
+</head>
+<body>
+    <!-- Your HTML content goes here -->
+</body>
+</html>
+```
+
 What is valid javascript syntax for if, else, for, while, switch statements?
+if
+```ruby
+if (condition) {
+    // code to be executed if the condition is true
+}
+```
+else if
+```ruby
+if (condition) {
+    // code to be executed if the condition is true
+} else {
+    // code to be executed if the condition is false
+}
+```
+for loop
+```ruby
+for (var i = 0; i < 5; i++) {
+    // code to be executed in each iteration
+}
+```
+while loop
+```ruby
+var i = 0;
+while (i < 5) {
+    // code to be executed in each iteration
+    i++;
+}
+```
+switch statement
+```ruby
+var fruit = "apple";
+switch(fruit) {
+    case "apple":
+        // code to be executed if fruit is "apple"
+        break;
+    case "banana":
+        // code to be executed if fruit is "banana"
+        break;
+    default:
+        // code to be executed if fruit doesn't match any case
+}
+```
+
 What is the correct syntax for creating a javascript object?
+object literal:
+```ruby
+var person = {
+    name: "John",
+    age: 30,
+    gender: "male"
+};
+```
+use a constructor
+```ruby
+function Person(name, age, gender) {
+    this.name = name;
+    this.age = age;
+    this.gender = gender;
+}
+
+var person = new Person("John", 30, "male");
+```
+
 Is is possible to add new properties to javascript objects?
+yes
+```ruby
+// Create an object
+var person = {
+    name: "John",
+    age: 30,
+    gender: "male"
+};
+
+// Add a new property
+person.job = "developer";
+
+console.log(person);
+// Output: { name: "John", age: 30, gender: "male", job: "developer" }
+```
+
 If you want to include JavaScript on an HTML page, which tag do you use?
+```ruby
+    <script>
+        // JavaScript code goes here
+        console.log("Hello, World!");
+    </script>
+```
 Given the following HTML, what JavaScript could you use to set the text "animal" to "crow" and leave the "fish" text unaffected?
+
 Which of the following correctly describes JSON?
+- JSON stands for JavaScript Object Notation. It is a lightweight data interchange format that is easy for humans to read and write and easy for machines to parse and generate. JSON data is represented as key-value pairs, similar to JavaScript object properties. Here's an example of JSON data:
+-JSON is often used to transmit data between a server and a web application
+
 What does the console command chmod, pwd, cd, ls, vim, nano, mkdir, mv, rm, man, ssh, ps, wget, sudo  do?
+- chmod: Stands for "change mode". It is used to change the permissions of a file or directory in Unix and Unix-like operating systems. It allows you to control who can read, write, or execute a file.
+
+- pwd: Stands for "print working directory". It prints the current working directory, i.e., the directory you are currently in within the terminal.
+
+- cd: Stands for "change directory". It is used to change the current directory to a specified directory. For example, cd Documents will change the current directory to the "Documents" folder.
+
+- ls: Stands for "list". It is used to list the files and directories in the current directory.
+
+- vim: A text editor for Unix and Unix-like systems. It is a command-line based editor and is very powerful and configurable.
+
+- nano: Another text editor for Unix and Unix-like systems, but it has a simpler and more user-friendly interface compared to vim.
+
+- mkdir: Stands for "make directory". It is used to create a new directory. For example, mkdir NewFolder will create a new directory called "NewFolder".
+
+- mv: Stands for "move". It is used to move files or directories from one location to another. It can also be used to rename files or directories.
+
+- rm: Stands for "remove". It is used to delete files or directories. Be careful while using this command, as it permanently deletes files and directories.
+
+- man: Stands for "manual". It is used to display the manual pages for Unix and Unix-like commands. For example, man ls will display the manual page for the ls command.
+
+- ssh: Stands for "secure shell". It is used to connect to a remote server securely over a network. It provides encrypted communication between the client and the server.
+
+- ps: Stands for "process status". It is used to display information about the currently running processes on a system.
+
+- wget: A command-line utility for downloading files from the web. It allows non-interactive downloading of files from the internet.
+
+- sudo: Stands for "superuser do". It is used in Unix and Unix-like systems to allow a permitted user to execute a command as the superuser or another user, as specified in the sudoers file. It is often used to perform administrative tasks that require elevated privileges.
+
 Which of the following console command creates a remote shell session?
+- ssh
+
 Which of the following is true when the -la parameter is specified for the ls console command?
+
+- When you specify the -la parameters for the ls console command, it instructs the command to display a long format listing of files and directories, including hidden files (those starting with a dot .). Here's a breakdown of what each flag does:
+
+-l: Provides a long listing format. This format includes detailed information about the files and directories, such as permissions, owner, group, size, modification date, and the filename.
+
+-a: Displays hidden files and directories. By default, the ls command does not show files and directories that have names starting with a dot (.). Adding the -a flag includes these hidden items in the listing.
+
+- So, when you run ls -la in the terminal, it will show you a detailed list of all files and directories, including hidden ones, in the current directory.
+
 Which of the following is true for the domain name banana.fruit.bozo.click, which is the top level domain, which is a subdomain, which is a root domain?
-Is a web certificate is necessary to use HTTPS.
+top level: .click
+subdomain: banana and fruit
+root(represents the secondary level and top level): bozo.click
+
+Is a web certificate necessary to use HTTPS?
+- Yes, a web certificate, specifically an SSL/TLS certificate, is necessary to use HTTPS (Hypertext Transfer Protocol Secure)
+
 Can a DNS A record can point to an IP address or another A record.
+- A DNS A record points to an IP address
+
 Port 443, 80, 22 is reserved for which protocol?
+- Port 443: Port 443 is reserved for the HTTPS protocol (Hypertext Transfer Protocol Secure). It is used for secure communication over a computer network and is widely used on the Internet for securing web browsing sessions. When you visit a website using "https://", the communication occurs over port 443, ensuring encryption and data security.
+
+- Port 80: Port 80 is reserved for the HTTP protocol (Hypertext Transfer Protocol). It is the standard port used for unencrypted web communication. When you visit a website using "http://", the communication occurs over port 80. Unlike HTTPS, HTTP does not provide encryption, so data transmitted over this protocol is not secure.
+
+- Port 22: Port 22 is reserved for the SSH protocol (Secure Shell). SSH is a cryptographic network protocol used for secure remote login, file transfer, and tunneling. It provides a secure way to access and manage remote systems over an unsecured network.
+
 What will the following code using Promises output when executed?
+- JavaScript Promises are objects representing the eventual completion or failure of an asynchronous operation.
+- Promises have three states:
+ - Pending: The initial state; the promise is neither fulfilled nor rejected.
+
+ - Fulfilled: The operation completed successfully, and the promise has a resulting value.
+
+ - Rejected: The operation failed, and the promise has a reason for the failure.
+ ```ruby
+ myPromise
+    .then((result) => {
+        console.log("Success:", result);
+    })
+    .catch((error) => {
+        console.error("Error:", error);
+    })
+    .finally(() => {
+        console.log("Promise completed, regardless of success or failure.");
+    });
+    ```
