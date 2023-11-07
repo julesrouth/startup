@@ -4412,7 +4412,10 @@ This gives you complete control to inspect what the JavaScript code is doing and
 </details>
 
 # Midterm
-In the following code, what does the link element do?
+<details close>
+<summary>Questions and Answers</summary>
+
+ In the following code, what does the link element do?
 - a link element defines the relationship between the current document and an external resource
 
 In the following code,  what does a div tag do?
@@ -4688,13 +4691,14 @@ What will the following code using Promises output when executed?
     .finally(() => {
         console.log("Promise completed, regardless of success or failure.");
     });
-    ```
+ ```
+</details>
 
-    # Web Services
-    <details close> 
-    <summary>URL</summary>
+# Web Services
+<details close> 
+<summary>URL</summary>
     
-    # URL
+# URL
 
 📖 **Deeper dive reading**: [MDN What is a URL](https://developer.mozilla.org/en-US/docs/Learn/Common_questions/What_is_a_URL)
 
@@ -4726,12 +4730,12 @@ Technically you can also provide a user name and password before the domain name
 ## URL, URN, and URI
 
 You will sometimes hear the use of URN or URI when talking about web resources. A Uniform Resource Name (URN) is a unique resource name that does not specify location information. For example, a book URN might be `urn:isbn:10,0765350386`. A Uniform Resource Identifier (URI) is a general resource identifier that could refer to either a URL or a URN. With web programming you are almost always talking about URLs and therefore you should not use the more general URI.
-    </details>
+</details>
 
-    <details close>
-    <summary>Debugging Node</summary>
+<details close>
+<summary>Debugging Node</summary>
     
-    # Debugging Node.js
+# Debugging Node.js
 
 🔑 **Required reading**: [Debugging a Node.js application](https://youtu.be/B0le_Z_2TQY)
 
@@ -4816,7 +4820,6 @@ npm install -g nodemon
 Then, because VS Code does not know how to launch Nodemon automatically, you need create a VS Code launch configuration. In VS Code press `CTRL-SHIFT-P` (on Windows) or `⌘-SHIFT-P` (on Mac) and type the command `Debug: Add configuration`. This will then ask you what type of configuration you would like to create. Type `Node.js` and select the `Node.js: Nodemon setup` option. In the launch configuration file that it creates, change the program from `app.js` to `main.js` (or whatever the main JavaScript file is for your application) and save the configuration file.
 
 Now when you press `F5` to start debugging it will run Nodemon instead of Node.js, and your changes will automatically update your application when you save.
-    
-    </details>
+</details>
 
     
