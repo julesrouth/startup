@@ -67,3 +67,13 @@ For this deliverable I implemented by JavaScript so that the application works f
 - **database** -Displayed current habits for the week. Held in local storage which will be replaced by the database
 - **WebSocket** - Gallery displays finished habits from all users in the database
 - **application logic** - Adds a new habit and takes you to the habits page where it shows the habits for the week. Can increase the accomplished habit count by pressing a button. Still need to implent the sticker option, but this function will suffice for now
+
+### Service deliverable
+
+For this deliverable I added backend endpoints that receives habits
+
+- **Node.js/Express HTTP service** -
+- **Static middleware for frontend** - 
+- **Calls to third party endpoints** - 
+- **Backend service endpoints** - 
+- **Frontend calls service endpoints** -
