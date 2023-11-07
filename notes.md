@@ -4689,3 +4689,134 @@ What will the following code using Promises output when executed?
         console.log("Promise completed, regardless of success or failure.");
     });
     ```
+
+    # Web Services
+    <details close> 
+    <summary>URL</summary>
+    
+    # URL
+
+📖 **Deeper dive reading**: [MDN What is a URL](https://developer.mozilla.org/en-US/docs/Learn/Common_questions/What_is_a_URL)
+
+The Uniform Resource Locator (URL) represents the location of a web resource. A web resource can be anything, such as a web page, font, image, video stream, database record, or JSON object. It can also be completely ephemeral, such as a visitation counter, or gaming session.
+
+Looking at the different parts of a URL is a good way to understand what it represents. Here is an example URL that represents the summary of accepted CS 260 BYU students that is accessible using secure HTTP.
+
+```js
+https://byu.edu:443/cs/260/student?filter=accepted#summary
+```
+
+The URL syntax uses the following convention. Notice the delimiting punctuation between the parts of the URL. Most parts of the URL are optional. The only ones that are required are the scheme, and the domain name.
+
+```yaml
+<scheme>://<domain name>:<port>/<path>?<parameters>#<anchor>
+```
+
+| Part        | Example                              | Meaning                                                                                                                                                                                                                                                                             |
+| ----------- | ------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Scheme      | https                                | The protocol required to ask for the resource. For web applications, this is usually HTTPS. But it could be any internet protocol such as FTP or MAILTO.                                                                                                                            |
+| Domain name | byu.edu                              | The domain name that owns the resource represented by the URL.                                                                                                                                                                                                                      |
+| Port        | 3000                                 | The port specifies the numbered network port used to connect to the domain server. Lower number ports are reserved for common internet protocols, higher number ports can be used for any purpose. The default port is 80 if the scheme is HTTP, or 443 if the scheme is HTTPS.     |
+| Path        | /school/byu/user/8014                | The path to the resource on the domain. The resource does not have to physically be located on the file system with this path. It can be a logical path representing endpoint parameters, a database table, or an object schema.                                                    |
+| Parameters  | filter=names&highlight=intro,summary | The parameters represent a list of key value pairs. Usually it provides additional qualifiers on the resource represented by the path. This might be a filter on the returned resource or how to highlight the resource. The parameters are also sometimes called the query string. |
+| Anchor      | summary                              | The anchor usually represents a sub-location in the resource. For HTML pages this represents a request for the browser to automatically scroll to the element with an ID that matches the anchor. The anchor is also sometimes called the hash, or fragment ID.                     |
+
+Technically you can also provide a user name and password before the domain name. This was used historically to authenticate access, but for security reasons this is deprecated. However, you will still see this convention for URLs that represent database connection strings.
+
+## URL, URN, and URI
+
+You will sometimes hear the use of URN or URI when talking about web resources. A Uniform Resource Name (URN) is a unique resource name that does not specify location information. For example, a book URN might be `urn:isbn:10,0765350386`. A Uniform Resource Identifier (URI) is a general resource identifier that could refer to either a URL or a URN. With web programming you are almost always talking about URLs and therefore you should not use the more general URI.
+    </details>
+
+    <details close>
+    <summary>Debugging Node</summary>
+    
+    # Debugging Node.js
+
+🔑 **Required reading**: [Debugging a Node.js application](https://youtu.be/B0le_Z_2TQY)
+
+📖 **Deeper dive reading**: [Node.js debugging in VS Code](https://code.visualstudio.com/docs/nodejs/nodejs-debugging)
+
+Previously your JavaScript debugging was done by running the `Live Server` VS Code extension and using the browser's debugging tools as it executed in the browser. Now that you are writing JavaScript that runs using Node.js, you need a way to launch and debug your code that runs outside of the browser. One great way to do that is to use the debugging tools built into VS Code. To debug JavaScript in VS Code you first need some JavaScript to debug. Open up VS Code and create a new file named `main.js` and paste the following code into the file.
+
+```js
+let x = 1 + 1;
+
+console.log(x);
+
+function double(x) {
+  return x * 2;
+}
+
+x = double(x);
+
+console.log(x);
+```
+
+You can now debug `main.js` in VS Code by executing the `Start Debugging` command by pressing `F5`. The first time you run this, VS Code will ask you what debugger you want to use. Select `Node.js`.
+
+![Debug start](webServicesDebugStart.png)
+
+The code will execute and the debug console window will automatically open to show you the debugger output where you can see the results of the two `console.log` statements found in the code.
+
+![Debug output](webServicesDebugOutput.png)
+
+You can pause execution of the code by setting a breakpoint. Move your cursor over to the far left side of the editor window. As you hover on the left side of the line numbers you will see a red dot appear. Click on the dot to set the breakpoint.
+
+![Debug output](webServicesDebugBreakpoint.png)
+
+Now start the debugger again by pressing `F5`. The code will start running, but pause on the line with the breakpoint. You can then see the values of variables by looking at the variable window on the left, or by hovering your mouse over the variable you would like to inspect.
+
+![Debug pause](webServicesDebugPaused.png)
+
+You can continue execution of the code by pressing `F10` to step to the next line, `F11` to step into a function call, or `F5` to continue running from the current line. When the last line of code executes the debugger will automatically exit and you will need to press `F5` to start it running again. You can stop debugging at any time by pressing `SHIFT-F5`.
+
+Experiment with this simple file until you are comfortable running the debugger, setting breakpoints, and inspecting variables.
+
+## Debugging a Node.js web service
+
+In order to debug a web service running under Node.js we first need to write our code. Replace the code in your `main.js` file with the following.
+
+```js
+const express = require('express');
+const app = express();
+
+app.get('/*', (req, res) => {
+  res.send({ url: req.originalUrl });
+});
+
+const port = 8080;
+app.listen(port, function () {
+  console.log(`Listening on port ${port}`);
+});
+```
+
+Switch to your console application and run `npm init -y` and `npm install express` from your code directory so that we can use the Express package to write a simple web service.
+
+Now we are ready to debug again. Set a breakpoint on the getStore endpoint callback (line 5) and the `app.listen` call (line 9). Start debugging by pressing `F5`. The debugger should stop on the `listen` call where you can inspect the `app` variable. Press `F5` again to continue running. Now open up your browser and set the location to `localhost:8080`. This should hit the breakpoint on the endpoint. Take some time to inspect the `req` object. You should be able to see what the HTTP method is, what parameters are provided, and what the path currently is. Press `F5` to continue.
+
+Your browser should display the JSON object, containing the URL, that you returned from your endpoint. Now change the URL in the browser to include a path and some query parameters. Something like `http://localhost:8080/fish/taco?order=2`. Requesting that URL should cause your breakpoint to hit again where you can see the URL changes reflected in the req object.
+
+Now, instead of pressing `F5` to continue, press `F11` to step into the `res.send` function. This will take you out of your code and into the Express code that handles sending a response. Because you installed the Express package using NPM, all of Express's source code is sitting in the `node_modules` directory. You can also set breakpoints there, examine variables, and step into functions. Debugging into popular packages is a great way to learn how to code by seeing how really good programmers do things. Take some time to walk around Holowaychuk's code and see if you can understand what it is doing.
+
+![Debug step in](webServicesDebugStepIn.png)
+
+## Nodemon
+
+Once you start writing complex web applications you will find yourself making changes in the middle of debugging sessions and you would like to have `node` restart automatically and update the browser as the changes are saved. This seems like a simple thing, but over the course of hundreds of changes, every second you can save really starts to add up.
+
+The [Nodemon package](https://www.npmjs.com/package/nodemon) is basically a wrapper around `node` that watches for files in the project directory to change. When it detects that you saved something it will automatically restart `node`.
+
+If you would like to experiment with this then take the following steps. First install Nodemon globally so that you can use it to debug all of your projects.
+
+```sh
+npm install -g nodemon
+```
+
+Then, because VS Code does not know how to launch Nodemon automatically, you need create a VS Code launch configuration. In VS Code press `CTRL-SHIFT-P` (on Windows) or `⌘-SHIFT-P` (on Mac) and type the command `Debug: Add configuration`. This will then ask you what type of configuration you would like to create. Type `Node.js` and select the `Node.js: Nodemon setup` option. In the launch configuration file that it creates, change the program from `app.js` to `main.js` (or whatever the main JavaScript file is for your application) and save the configuration file.
+
+Now when you press `F5` to start debugging it will run Nodemon instead of Node.js, and your changes will automatically update your application when you save.
+    
+    </details>
+
+    
