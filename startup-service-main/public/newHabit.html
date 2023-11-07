@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>New Habit</title>
+    <link rel="icon" href="favicon.ico" />
+
+    <script src="habit.js"></script>
+    <link rel="stylesheet" href="main.css" />
+    <link rel="stylesheet" href="about.css" />
+
+    <!-- Include bootstrap CSS framework -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body class = "bgdark text-light">
+    <header class = "container-fluid">
+      <!-- Navigation elements -->
+      <nav class="nav-bar navbar-dark">
+        <a class="navbar-brand" href="#">Habit Chart</a>
+        <!-- Menu is a semantic alternative to <ul> that represents an interaction -->
+        <menu>
+          <li class = "nav-item"><a class = "nav-link" href="index.html">Login</a></li>
+          <li class = "nav-item"><a class = "nav-link" href="habits.html">Habits</a></li>
+          <li class = "nav-item"><a class = "nav-link" href="newHabit.html">New Habit</a></li>
+          <li class = "nav-item"><a class = "nav-link" href="gallery.html">Gallery</a></li>
+          <li class = "nav-item"><a class = "nav-link" href="about.html">About</a></li>
+        </menu>
+      </nav>
+    </header>
+
+    <main class = "text-dark">
+        <!-- <table>
+          <tr></tr>
+          <tr></tr>
+        </table> -->
+        <div>
+          <label for="habit">Enter in a new habit</label>
+          <input type="text" id="habitName" placeholder="Exercise 30 min"/>
+        </div>
+        <div>
+          <label for="Day Amount">Enter how many days per week</label>
+          <input type="text" id="habitFrequency" placeholder="7"/>
+          <label for="Day Amount">/ 7 days</label>
+        </div>
+        <div>
+          <button onclick="newHabit()">Add New Habit</button>
+        </div>
+    </main>
+
+    <footer class="text-dark">
+      <div class="container-fluid">
+        <span class="text-reset">Author Name: Julia Routh</span>
+        <a class="text-reset" href="https://github.com/julesrouth/startup">Github</a>
+      </div>
+    </footer>
+  </body>
+</html>
