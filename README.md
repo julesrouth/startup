@@ -72,8 +72,8 @@ For this deliverable I implemented by JavaScript so that the application works f
 
 For this deliverable I added backend endpoints that receives habits
 
-- **Node.js/Express HTTP service** -
-- **Static middleware for frontend** - 
-- **Calls to third party endpoints** - 
-- **Backend service endpoints** - 
-- **Frontend calls service endpoints** -
+- **Node.js/Express HTTP service** - Done
+- **Static middleware for frontend** - Done
+- **Calls to third party endpoints** - not using any third party endpoints
+- **Backend service endpoints** - using get and post for habits
+- **Frontend calls service endpoints** - using fetch in the gallery
