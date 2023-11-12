@@ -1,11 +1,30 @@
-function newHabit(){
+async function newHabit(){
     console.log("new habit");
     var habitName = document.getElementById("habitName").value;
     var habitFrequency = document.getElementById("habitFrequency").value;
+    var userName = localStorage.getItem("userName");
+    console.log(userName);
 
-    const habit = { name: habitName, frequency: habitFrequency, completed: "0" }; //incFrequency: (x) => {this.frequency += x}
+    const habit = { name: habitName, frequency: habitFrequency, completed: "0", user: userName }; //incFrequency: (x) => {this.frequency += x}
     console.log(habit);
 
+    try{
+        const response = await fetch('/api/habit', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(habit)
+        });
+        const habits = await response.json();
+        localStorage.setItem('habits', JSON.stringify(habits));
+    } catch{
+        newHabitLocal(habit);
+    }
+
+}
+
+function newHabitLocal(habit){
     let habits = [];
 
     const habitsText = localStorage.getItem('habits');
@@ -30,7 +49,6 @@ function newHabit(){
     else{
         console.log("too many habits");
     }
-
 }
 
 function incFrequency(habitName){
@@ -81,17 +99,26 @@ function incFrequency(habitName){
 }
 
 
-function loadHabits(){
+async function loadHabits(){
     console.log("loading habits");
     let habits = [];
-
-    const habitsText = localStorage.getItem('habits');
+    var habitsText = "";
+    // try{
+    //     const response = fetch('/api/habits');
+    //     habits = await response.json();
+    //     localStorage.setItem('habits', JSON.stringify(habits));
+    // }
+    // catch{
+    //     habitsText = localStorage.getItem('habits');
+    // }
+    habitsText = localStorage.getItem('habits');
     
     if(habitsText){
         habits = JSON.parse(habitsText);
         console.log(habits);
         for(var habit in habits){
             console.log(habit);
+            console.log(habits[habit].user)
             addHabit(habits[habit].name, habits[habit].frequency, habits[habit].completed);
         }
     }
@@ -148,18 +175,25 @@ function clearHabits(){
     window.location.href = "habits.html";
 }
 
-function loadCompletedHabits(){
+async function loadCompletedHabits(){
     let completedHabits = [];
-
-    const completedHabitsText = localStorage.getItem('completedHabits');
-             
-    if(completedHabitsText){
-        completedHabits = JSON.parse(completedHabitsText);
-        for(var habit in completedHabits){
-            console.log(habit);
-            addHabitToGallery(completedHabits[habit].userName, completedHabits[habit].name, completedHabits[habit].frequency, completedHabits[habit].completed, completedHabits[habit].date);
+    var completedHabitsText = "";
+    try{
+        const response = fetch('/api/completedHabits');
+        completedHabits = await response.json();
+        localStorage.setItem('habits', JSON.stringify(completedHabits));
+    }
+    catch{
+        completedHabitsText = localStorage.getItem('completeHabits');
+        if(completedHabitsText){
+            completedHabits = JSON.parse(completedHabitsText);
         }
-    }   
+    }
+
+    for(var habit in completedHabits){
+        console.log(habit);
+        addHabitToGallery(completedHabits[habit].user, completedHabits[habit].name, completedHabits[habit].frequency, completedHabits[habit].completed, completedHabits[habit].date);
+    } 
 }
 
 function addHabitToGallery(userName, habitName, habitFrequency, habitCompleted, habitDate){

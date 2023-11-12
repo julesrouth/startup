@@ -18,5 +18,6 @@
   "homepage": "https://github.com/webprogramming260/simon-server#readme",
   "dependencies": {
     "express": "^4.18.2"
-  }
+  },
+  "keywords": []
 }
