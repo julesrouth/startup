@@ -76,4 +76,4 @@ For this deliverable I added backend endpoints that receives habits
 - **Static middleware for frontend** - Done
 - **Calls to third party endpoints** - not using any third party endpoints
 - **Backend service endpoints** - using get and post for habits
-- **Frontend calls service endpoints** - using fetch in the gallery
+- **Frontend calls service endpoints** - using fetch to add habit and get habits for gallery
