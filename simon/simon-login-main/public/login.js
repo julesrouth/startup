@@ -1,20 +1,12 @@
-// function login() {
-//   const nameEl = document.querySelector("#name");
-//   const passwordEl = document.querySelector("#password");
-//   localStorage.setItem("userName", nameEl.value);
-//   localStorage.setItem("password", passwordEl.value);
-//   window.location.href = "habits.html";
-// }
-
 (async () => {
   const userName = localStorage.getItem('userName');
   if (userName) {
-    document.querySelector('#user').textContent = userName;
+    document.querySelector('#playerName').textContent = userName;
     setDisplay('loginControls', 'none');
-    setDisplay('userControls', 'block');
+    setDisplay('playControls', 'block');
   } else {
     setDisplay('loginControls', 'block');
-    setDisplay('userControls', 'none');
+    setDisplay('playControls', 'none');
   }
 })();
 
@@ -49,8 +41,8 @@ async function loginOrCreate(endpoint) {
   }
 }
 
-function habits() {
-  window.location.href = 'habits.html';
+function play() {
+  window.location.href = 'play.html';
 }
 
 function logout() {
@@ -61,7 +53,7 @@ function logout() {
 }
 
 async function getUser(email) {
-  //let habits = [];
+  let scores = [];
   // See if we have a user with the given email.
   const response = await fetch(`/api/user/${email}`);
   if (response.status === 200) {
@@ -72,9 +64,8 @@ async function getUser(email) {
 }
 
 function setDisplay(controlId, display) {
-  const userControlEl = document.querySelector(`#${controlId}`);
-  if (userControlEl) {
-    userControlEl.style.display = display;
+  const playControlEl = document.querySelector(`#${controlId}`);
+  if (playControlEl) {
+    playControlEl.style.display = display;
   }
 }
-

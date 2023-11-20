@@ -2,12 +2,12 @@ const cookieParser = require('cookie-parser');
 const bcrypt = require('bcrypt');
 const express = require('express');
 const app = express();
-const Db = require('./database.js');
+const DB = require('./database.js');
 
 const authCookieName = 'token';
 
-// The service port. In production the front-end code is statically hosted by the service on the same port.
-const port = process.argv.length > 2 ? process.argv[2] : 4000;
+// The service port may be set on the command line
+const port = process.argv.length > 2 ? process.argv[2] : 3000;
 
 // JSON body parsing using built-in middleware
 app.use(express.json());
@@ -15,7 +15,7 @@ app.use(express.json());
 // Use the cookie parser middleware for tracking authentication tokens
 app.use(cookieParser());
 
-// Serve up the front-end static content hosting
+// Serve up the applications static content
 app.use(express.static('public'));
 
 // Trust headers that are forwarded from the proxy so we can determine IP addresses
@@ -25,15 +25,12 @@ app.set('trust proxy', true);
 var apiRouter = express.Router();
 app.use(`/api`, apiRouter);
 
-
-/*END POINTS*/
-
 // CreateAuth token for a new user
 apiRouter.post('/auth/create', async (req, res) => {
-  if (await Db.getUser(req.body.email)) {
+  if (await DB.getUser(req.body.email)) {
     res.status(409).send({ msg: 'Existing user' });
   } else {
-    const user = await Db.createUser(req.body.email, req.body.password);
+    const user = await DB.createUser(req.body.email, req.body.password);
 
     // Set the cookie
     setAuthCookie(res, user.token);
@@ -46,7 +43,7 @@ apiRouter.post('/auth/create', async (req, res) => {
 
 // GetAuth token for the provided credentials
 apiRouter.post('/auth/login', async (req, res) => {
-  const user = await Db.getUser(req.body.email);
+  const user = await DB.getUser(req.body.email);
   if (user) {
     if (await bcrypt.compare(req.body.password, user.password)) {
       setAuthCookie(res, user.token);
@@ -80,7 +77,7 @@ apiRouter.use(secureApiRouter);
 
 secureApiRouter.use(async (req, res, next) => {
   authToken = req.cookies[authCookieName];
-  const user = await Db.getUserByToken(authToken);
+  const user = await DB.getUserByToken(authToken);
   if (user) {
     next();
   } else {
@@ -88,60 +85,18 @@ secureApiRouter.use(async (req, res, next) => {
   }
 });
 
-
-// Get Habits
-apiRouter.get('/habits', async(_req, res) => {
-  const habits = await Db.getHabits();
-  res.send(habits);
+// GetScores
+secureApiRouter.get('/scores', async (req, res) => {
+  const scores = await DB.getHighScores();
+  res.send(scores);
 });
 
-// Get Completed Habits
-apiRouter.get('/completedHabits', async(_req, res) => {
-  const completedHabits = await Db.getCompletedHabits();
-  res.send(completedHabits);
-});
-
-// Submit Habit
-apiRouter.post('/habit', async(req, res) => {
-  Db.addHabit(req.body);
-  const habits = await Db.getHabits();
-  res.send(habits);
-});
-
-//Update Habit
-apiRouter.put('/habit/update', async(req , res) => {
-  console.log("api update habit");
-  Db.updateHabit(req.body);
-  const habits = await Db.getHabits();
-  res.send(habits);
-});
-
-//Delete Habit
-apiRouter.delete('/habit', async(req, res) => {
-  Db.deleteHabit(req.body);
-  const habits = await Db.getHabits();
-  res.send(habits);
-});
-
-// Submit Completed Habit
-apiRouter.post('/completedHabit', async(req, res) => {
-  Db.addCompletedHabit(req.body);
-  const completedHabits = await Db.getCompletedHabits();
-  res.send(completedHabits);
-});
-
-// clear habit database
-apiRouter.delete('/habits', async(req, res) => {
-  Db.clearHabits();
-  const habits = await Db.getHabits();
-  res.send(habits);
-});
-
-// clear completed habit database
-apiRouter.delete('/completedHabits', async(req, res) => {
-  Db.clearCompletedHabits();
-  const completedHabits = await Db.getCompletedHabits();
-  res.send(completedHabits);
+// SubmitScore
+secureApiRouter.post('/score', async (req, res) => {
+  const score = { ...req.body, ip: req.ip };
+  await DB.addScore(score);
+  const scores = await DB.getHighScores();
+  res.send(scores);
 });
 
 // Default error handler

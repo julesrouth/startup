@@ -1,3 +1,43 @@
+async function getHabitsCollection(){
+    let habits = [];
+    var habitsText = "";
+    try{
+        console.log("trying to fetch habits");
+        const response = await fetch('/api/habits', {
+            method: 'GET',
+        });
+        habits = response.json();
+        localStorage.setItem('habits', JSON.stringify(habits));
+    }
+    catch{
+        console.log("fetch failed, loading from local storage");
+        habitsText = localStorage.getItem('habits');
+        if(habitsText){
+            habits = JSON.parse(habitsText);
+        }
+    }
+    console.log(habits);
+    return habits
+}
+
+async function getCompletedHabitsCollection(){
+    let completedHabits = [];
+    var completedHabitsText = "";
+    try{
+        const response = await fetch('/api/completedHabits');      
+        completedHabits = await response.json();
+        localStorage.setItem('completedHabits', JSON.stringify(completedHabits));
+    }
+    catch{
+        completedHabitsText = localStorage.getItem('completedHabits');
+        if(completedHabitsText){
+            completedHabits = JSON.parse(completedHabitsText);
+        }
+    }
+    return completedHabits;
+
+}
+
 async function newHabit(){
     console.log("new habit");
     var habitName = document.getElementById("habitName").value;
@@ -14,7 +54,7 @@ async function newHabit(){
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(habit)
+            body: JSON.stringify(habit),
         });
         const habits = await response.json();
         localStorage.setItem('habits', JSON.stringify(habits));
@@ -50,80 +90,129 @@ function newHabitLocal(habit){
     }
 }
 
-function incFrequency(habitName){
-    console.log("increasing frequency");
-    let habits = [];
+async function newCompletedHabit(habit){
+    console.log("adding new completed habit");
 
-    const habitsText = localStorage.getItem('habits');
-    console.log(habitsText);
+    let userName = localStorage.getItem('userName');
+    let completedHabit = { userName: userName, name: habit.name, frequency: habit.frequency, completed: habit.completed, date: new Date().toLocaleDateString() };
     
-    if(habitsText){
-        console.log("parsing habitsText");
-        habits = JSON.parse(habitsText);
+    //remove habit from habits database
+
+    try{
+        const response = await fetch('/api/habit', {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(habit),
+        });
+        const habits = await response.json();
+        localStorage.setItem('habits', JSON.stringify(habits));
+    } catch{
+        let habits = getHabitsCollection();
+        habits.splice(habit, 1);
+        localStorage.setItem('habits', JSON.stringify(habits));
     }
 
-    console.log(habits);
+    //add new completed habit to completed habits database
+    try{
+        const response = await fetch('/api/completedHabit', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(completedHabit),
+        });
+        let completedHabits = await response.json();
+        localStorage.setItem('completedHabits', JSON.stringify(completedHabits));
+    } catch{
+        newCompletedHabitLocal(completedHabit);
+    }
+
+
+}
+
+function newCompletedHabitLocal(completedHabit){
+    let completedHabits = [];
+
+    const completedHabitsText = localStorage.getItem('completedHabits');
+    console.log(completedHabitsText);
+    
+    if(completedHabitsText){
+        console.log("parsing completedHabitsText");
+        completedHabits = JSON.parse(completedHabitsText);
+    }
+
+    console.log(completedHabits);
+    
+    completedHabits.push(completedHabit);
+    localStorage.setItem('completedHabits', JSON.stringify(completedHabits));
+}
+
+async function incFrequency(habitName){
+    console.log("increasing frequency");
+
+    let habits = [];
+    habits = await getHabitsCollection();
 
     for(var habit in habits){
         if(habits[habit].name == habitName){
             console.log("found habit");
             if(habits[habit].completed < habits[habit].frequency){
+                //inc habit
                 habits[habit].completed++;
+                //set it to a local variable so the fetch can work
+                let incHabit = habits[habit];
                 console.log(habits[habit].completed);
-                localStorage.setItem('habits', JSON.stringify(habits));
-                window.location.href = "habits.html";
-            }
-            if(habits[habit].completed == habits[habit].frequency){
-                console.log("habit completed");
-                //add to gallery
-                let completedHabits = [];
-
-                const completedHabitsText = localStorage.getItem('completedHabits');
-                
-                if(completedHabitsText){
-                    completedHabits = JSON.parse(completedHabitsText);
+                if(habits[habit].completed == habits[habit].frequency){
+                    console.log("habit completed");
+                    let completedHabits = await newCompletedHabit(habits[habit]);
+                    localStorage.setItem('completedHabits', JSON.stringify(completedHabits));
+                    window.location.href = "habits.html";
                 }
-                userName = localStorage.getItem('userName');
-                completedHabit = { userName: userName, name: habitName, frequency: habits[habit].frequency, completed: habits[habit].completed, date: new Date().toLocaleDateString() };
-                completedHabits.push(completedHabit);
-                localStorage.setItem('completedHabits', JSON.stringify(completedHabits));
-                //remove from habits
-                habits.splice(habit, 1);
-                localStorage.setItem('habits', JSON.stringify(habits));
-                window.location.href = "habits.html";
+                else{
+                    //update habit in database
+                    try{
+                        const response = await fetch('/api/habit/update', {
+                            method: 'PUT',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify(incHabit),
+                        });
+                        let habitsUpdated = await response.json();
+                        localStorage.setItem('habits', JSON.stringify(habitsUpdated));
+                    } catch(error){
+                        console.log(error);
+                        incFrequencyLocal(habits[habit], habits);
+                    }
+                    window.location.href = "habits.html";
+                }
             }
         }
     }
 
+}
+
+function incFrequencyLocal(habit, habits){
+    habits.push(habit);
+    localStorage.setItem('habits', JSON.stringify(habits));
 }
 
 
 async function loadHabits(){
     console.log("loading habits");
-    let habits = [];
-    var habitsText = "";
-    // try{
-    //     const response = fetch('/api/habits');
-    //     habits = await response.json();
-    //     localStorage.setItem('habits', JSON.stringify(habits));
-    // }
-    // catch{
-    //     habitsText = localStorage.getItem('habits');
-    // }
-    habitsText = localStorage.getItem('habits');
+    habits = await getHabitsCollection();
     
-    if(habitsText){
-        habits = JSON.parse(habitsText);
-        console.log(habits);
-        for(var habit in habits){
-            console.log(habit);
-            console.log(habits[habit].user)
-            addHabit(habits[habit].name, habits[habit].frequency, habits[habit].completed);
-        }
+    for(var habit in habits){
+        console.log(habit);
+        console.log(habits[habit].user)
+        addHabitToWeek(habits[habit].name, habits[habit].frequency, habits[habit].completed);
     }
+
 }
 
-function addHabit(habitName, habitFrequency, habitCompleted){
+function addHabitToWeek(habitName, habitFrequency, habitCompleted){
     console.log("habit Name: " + habitName + " habit Frequency: " + habitFrequency);
     if(localStorage.getItem("habits") != []){
         const tableBodyEl = document.querySelector('#habits');
@@ -170,28 +259,26 @@ function addHabit(habitName, habitFrequency, habitCompleted){
 
 function clearHabits(){
     console.log("clearing habits");
-    localStorage.setItem('habits', JSON.stringify([]));
+
+    try{
+        const response = fetch('/api/habits', {
+            method: 'DELETE',
+        });
+        const habits = response.json();
+        localStorage.setItem('habits', JSON.stringify(habits));
+    }
+    catch{
+        localStorage.setItem('habits', JSON.stringify([]));
+    }
     window.location.href = "habits.html";
 }
 
 async function loadCompletedHabits(){
-    let completedHabits = [];
-    var completedHabitsText = "";
-    try{
-        const response = fetch('/api/completedHabits');
-        completedHabits = await response.json();
-        localStorage.setItem('habits', JSON.stringify(completedHabits));
-    }
-    catch{
-        completedHabitsText = localStorage.getItem('completedHabits');
-        if(completedHabitsText){
-            completedHabits = JSON.parse(completedHabitsText);
-        }
-    }
+    let completedHabits = await getCompletedHabitsCollection();
 
     for(var habit in completedHabits){
         console.log(habit);
-        addHabitToGallery(completedHabits[habit].user, completedHabits[habit].name, completedHabits[habit].frequency, completedHabits[habit].completed, completedHabits[habit].date);
+        addHabitToGallery(completedHabits[habit].userName, completedHabits[habit].name, completedHabits[habit].frequency, completedHabits[habit].completed, completedHabits[habit].date);
     } 
 }
 
@@ -227,6 +314,16 @@ function addHabitToGallery(userName, habitName, habitFrequency, habitCompleted, 
 
 function clearGallery(){
     console.log("clearing gallery");
-    localStorage.setItem('completedHabits', JSON.stringify([]));
+
+    try{
+        const response = fetch('/api/completedHabits', {
+            method: 'DELETE',
+        });
+        const completedHabits = response.json();
+        localStorage.setItem('completedHabits', JSON.stringify(completedHabits));
+    }
+    catch{  
+        localStorage.setItem('completedHabits', JSON.stringify([]));
+    }
     window.location.href = "gallery.html";
 }
