@@ -77,3 +77,38 @@ For this deliverable I added backend endpoints that receives habits
 - **Calls to third party endpoints** - not using any third party endpoints
 - **Backend service endpoints** - using get and post for habits
 - **Frontend calls service endpoints** - using fetch to add habit and get habits for gallery
+
+## DB deliverable
+
+For this deliverable I stored the habits and completed habits in the database.
+
+- **MongoDB Atlas database created** - done!
+- **Endpoints for data** - My stubbed out endpoints now process the data and send it to Mongo.
+- **Stores data in MongoDB** - done!
+
+## Login deliverable
+
+For this deliverable I associate the habits with the logged in user.
+
+- **User registration** - Creates a new account in the database.
+- **existing user** - Stores the habits under the same user if the user already exists.
+- **Use MongoDB to store credentials** - Stores both user and their habits
+- **Restricts functionality** - You cannot look at habits until you have logged in. This is restricted on the frontend only.
+
+## WebSocket deliverable
+
+not done.
+
+- **Backend listens for WebSocket connection** - 
+- **Frontend makes WebSocket connection** - 
+- **Data sent over WebSocket connection** - 
+- **WebSocket data displayed** -
+
+## React deliverable
+
+not done
+
+- **Bundled and transpiled** -
+- **Components** - 
+- **Router** - 
+- **Hooks** - 
