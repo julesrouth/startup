@@ -1,3 +1,6 @@
+const HabitCompletedEvent = 'habit-completed';
+configureWebSocket();
+
 async function getHabitsCollection(){
     let habits = [];
     var habitsText = "";
@@ -128,6 +131,8 @@ async function newCompletedHabit(habit){
     } catch{
         newCompletedHabitLocal(completedHabit);
     }
+    //let other users know of a completed habit
+    broadcastEvent(completedHabit.userName, HabitCompletedEvent, completedHabit);
 
 
 }
@@ -146,6 +151,7 @@ function newCompletedHabitLocal(completedHabit){
     console.log(completedHabits);
     
     completedHabits.push(completedHabit);
+
     localStorage.setItem('completedHabits', JSON.stringify(completedHabits));
 }
 
@@ -327,3 +333,36 @@ function clearGallery(){
     }
     window.location.href = "gallery.html";
 }
+
+// Functionality for peer communication using WebSocket
+function configureWebSocket() {
+    const protocol = window.location.protocol === 'http:' ? 'ws' : 'wss';
+    this.socket = new WebSocket(`${protocol}://${window.location.host}/ws`);
+    this.socket.onopen = (event) => {
+      this.displayMsg('system', 'user', 'connected');
+    };
+    this.socket.onclose = (event) => {
+      this.displayMsg('system', 'user', 'disconnected');
+    };
+    this.socket.onmessage = async (event) => {
+      const msg = JSON.parse(await event.data.text());
+      if (msg.type === HabitCompletedEvent) {
+        this.displayMsg('user', msg.from, `completed ${msg.value.name}`);
+      }
+    };
+  }
+
+  function displayMsg(cls, from, msg) {
+    const chatText = document.querySelector('#user-messages');
+    chatText.innerHTML =
+      `<div class="event"><span class="${cls}-event">${from}</span> ${msg}</div>` + chatText.innerHTML;
+  }
+
+  function broadcastEvent(from, type, value) {
+    const event = {
+      from: from,
+      type: type,
+      value: value,
+    };
+    this.socket.send(JSON.stringify(event));
+  }

@@ -8,6 +8,7 @@
 
     <link rel="stylesheet" href="main.css" />
     <link rel="stylesheet" href="about.css" />
+    <link rel="stylesheet" href="gallery.css" />
 
     <!-- Include bootstrap CSS framework -->
     <link
@@ -34,25 +35,31 @@
     </header>
 
     <main class = "text-dark">
-      <table>
-        <thead>
-          <tr>
-            <th>User</th>
-            <th>Habit</th>
-            <th>Goal Count</th>
-            <th>Final Count</th>
-            <th>Day Accomplished</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tbody id = "completedHabits"></tbody>
-        </tbody>
-      </table>
+      <div class = users>
+        Users
+        <span class="user-name"></span>
+        <div id="user-messages"></div>
+      </div>
 
+      <div class = "habit-gallery">
+        <table>
+          <thead>
+            <tr>
+              <th>User</th>
+              <th>Habit</th>
+              <th>Goal Count</th>
+              <th>Final Count</th>
+              <th>Day Accomplished</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tbody id = "completedHabits"></tbody>
+          </tbody>
+        </table>
+      </div>
       <div>
         <button type="clear" onclick= "clearGallery()">Clear gallery</button>
       </div>
-
     </main>
 
     <footer class="text-dark">

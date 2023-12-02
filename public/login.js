@@ -1,10 +1,3 @@
-// function login() {
-//   const nameEl = document.querySelector("#name");
-//   const passwordEl = document.querySelector("#password");
-//   localStorage.setItem("userName", nameEl.value);
-//   localStorage.setItem("password", passwordEl.value);
-//   window.location.href = "habits.html";
-// }
 
 (async () => {
   const userName = localStorage.getItem('userName');
@@ -39,7 +32,7 @@ async function loginOrCreate(endpoint) {
 
   if (response.ok) {
     localStorage.setItem('userName', userName);
-    window.location.href = 'play.html';
+    window.location.href = 'habits.html';
   } else {
     const body = await response.json();
     const modalEl = document.querySelector('#msgModal');
