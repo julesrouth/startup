@@ -97,12 +97,13 @@ For this deliverable I associate the habits with the logged in user.
 
 ## WebSocket deliverable
 
-not done.
+I am using Websocket in the gallery page. It has messages on the left side when a user finishes a habit
 
-- **Backend listens for WebSocket connection** - 
-- **Frontend makes WebSocket connection** - 
-- **Data sent over WebSocket connection** - 
-- **WebSocket data displayed** -
+- **Backend listens for WebSocket connection** - done
+- **Frontend makes WebSocket connection** - done
+- **Data sent over WebSocket connection** - done
+- **WebSocket data displayed** - Users can see other users complete habits. Need to fix that when gallery page is reloaded, it keeps the same user and doesn't
+                                  switch over to the other user that logged in
 
 ## React deliverable
 
