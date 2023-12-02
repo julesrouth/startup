@@ -7255,6 +7255,7 @@ You can find the complete example described above in this [GitHub repository](ht
 1. Use the browser's debugger to view the WebSocket communication.
 </details>
 
+# Web Frameworks
 <details close>
 <summary>Web Frameworks</summary>
 
