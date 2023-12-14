@@ -107,9 +107,9 @@ I am using Websocket in the gallery page. It has messages on the left side when 
 
 ## React deliverable
 
-not done
+Converted everything to react, with the basic functionality of being able to add habit to a table and track how many times you complete it. Weird bug where it takes two button clicks to increase the frequency, but I'm working on fixing that when I eventually switch the buttons to be stickers. Once a habit is complete it moves to the gallery!
 
-- **Bundled and transpiled** -
-- **Components** - 
-- **Router** - 
-- **Hooks** - 
+- **Bundled and transpiled** - done!
+- **Components** - login, habits, new habit, gallery, and about are all components
+- **Router** - routing between each page
+- **Hooks** - I use UseState to track habit list state and completed habit list state with in the habit and gallery. Login also uses the authenticated state.
